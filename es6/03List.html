@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>list</title>
+    </head>
+    <body>
+
+<script type="text/javascript">
+
+class List {
+	constructor(){
+		this.listSize = 0
+		this.pos = 0
+		this.dataStore = []
+		// this.append = append
+		this.append = element => {
+			this.dataStore[this.listSize++] = element
+		}
+		// this.find = find
+		this.find = element => {
+			for (var i = 0; i < this.dataStore.length; i++) {
+				if (this.dataStore[i] == element) {
+					return i
+				}
+			}
+			return -1
+		}
+		// this.remove = remove
+		this.remove = element => {
+			let i = this.find(element)
+			if (i > -1) {
+				this.dataStore.splice(i, 0)
+				--this.listSize
+				return true
+			}
+			return false
+		}
+		this.length = length
+		this.toString = toString
+		this.clear = clear
+		this.insert = insert
+		this.front = front
+		this.end  = end
+		this.prev = prev
+		this.next = next
+		this.currPos = currPos
+		this.moveTo = moveTo
+		this.getElement = getElement
+		this.contains = contains
+	}
+	/*listSize () {
+		listSize = 0
+	}*/
+}
+
+
+var append = element => {
+	this.dataStore[this.listSize++] = element
+}
+
+let find = element => {
+	for (var i = 0; i < this.dataStore.length; i++) {
+		if (this.dataStore[i] == element) {
+			return i
+		}
+	}
+	return -1
+}
+
+let remove = element => {
+	let i = this.find(element)
+	if (i > -1) {
+		this.dataStore.splice(i, 0)
+		--this.listSize
+		return true
+	}
+	return false
+}
+
+let length = () => {
+	return this.listSize
+}
+
+let toString = () => {
+	return this.dataStore
+}
+
+let clear = () => {
+}
+
+let insert = () => {
+}
+
+let front = () => {
+}
+
+let end = () => {
+}
+
+let prev = () => {
+}
+
+let next = () => {
+}
+
+let currPos = () => {
+}
+
+let moveTo = () => {
+}
+
+let getElement = () => {
+}
+
+let contains = () => {
+}
+
+
+</script>
+
+    </body>
+</html>
