@@ -20,6 +20,44 @@ function LList() {
 	this.display = display
 }
 
+function find(item) {
+	var currentNode = this.head
+	while(currentNode.element != item){
+		currentNode = currentNode.next
+	}
+	return currentNode
+}
+
+function insert(newElement, item) {
+	var newNode = new Node(newElement),
+		currentNode = this.find(item)
+	newNode.next = currentNode.next
+	currentNode.next = newNode
+}
+
+function display() {
+	var currentNode = this.head
+		,str = this.head.element
+	while(currentNode.next){
+		str += ' -> ' + currentNode.next.element
+		currentNode = currentNode.next
+	}
+	return str
+}
+
+function remove(item) {
+	
+}
+
+///////
+///测试代码区
+///////
+var cities = new LList();
+cities.insert("Conway", "head");
+cities.insert("Russellville", "Conway");
+cities.insert("Alma", "Russellville");
+cities.display()
+
 </script>
 
 
