@@ -10,14 +10,18 @@
 function Node(element) {
 	this.element = element
 	this.next = null
+	this.previous = null	//double
 }
 
 function LList() {
 	this.head = new Node('head')
 	this.find = find
-	this.remove = remove
 	this.insert = insert
 	this.display = display
+	this.getPrevious = getPrevious
+	this.remove = remove
+	this.findLast = findLast	//double
+	this.dispReverse = dispReverse	//double
 }
 
 function find(item) {
@@ -32,6 +36,7 @@ function insert(newElement, item) {
 	var newNode = new Node(newElement),
 		currentNode = this.find(item)
 	newNode.next = currentNode.next
+	newNode.previous = currentNode	//double
 	currentNode.next = newNode
 }
 
@@ -42,22 +47,79 @@ function display() {
 		str += ' -> ' + currentNode.next.element
 		currentNode = currentNode.next
 	}
+	console.log(str)
 	return str
 }
 
+function getPrevious(item) {
+	var currentNode = this.head
+	while(currentNode.next && currentNode.next.element != item){
+		currentNode = currentNode.next
+	}
+	return currentNode	
+}
+
 function remove(item) {
-	
+	/*var previousNode = this.getPrevious(item)
+	if (previousNode) {
+		previousNode.next = previousNode.next.next
+	}*/
+
+	// double
+	var currentNode = this.find(item)
+	if (currentNode.next) {
+		currentNode.previous.next = currentNode.next
+		currentNode.next.previous = currentNode.previous
+		currentNode.next = currentNode.previous = null
+	}
+}
+
+function findLast() {
+	var currentNode = this.head
+	while(currentNode.next){
+		currentNode = currentNode.next
+	}
+	return currentNode
+}
+
+function dispReverse() {
+	var currentNode = this.head, str = this.findLast().element
+	currentNode = this.findLast()
+	while(currentNode.previous){
+		str +=  ' <- ' + currentNode.element
+		currentNode = currentNode.previous
+	}
+	console.log(str)
+	return str
 }
 
 ///////
-///测试代码区
+/// linkedlist test
 ///////
-var cities = new LList();
+/*var cities = new LList();
 cities.insert("Conway", "head");
 cities.insert("Russellville", "Conway");
 cities.insert("Alma", "Russellville");
-cities.display()
+cities.display()*/
 
+/*var cities = new LList();
+cities.insert("Conway", "head");
+cities.insert("Russellville", "Conway");
+cities.insert("Carlisle", "Russellville");
+cities.insert("Alma", "Carlisle");
+cities.display();
+cities.remove("Carlisle");
+cities.display();*/
+
+var cities = new LList();
+cities.insert("Conway", "head");
+cities.insert("Russellville", "Conway");
+cities.insert("Carlisle", "Russellville");
+cities.insert("Alma", "Carlisle");
+cities.display();
+cities.remove("Carlisle");
+cities.display();
+cities.dispReverse();
 </script>
 
 
