@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>06LinkedList</title>
+	<title>07Dictionary</title>
 </head>
 <body>
 
 <script type="text/javascript">
 
 function Dictionary() {
-		
+	this.dataStore = []
+	this.add = add
+	this.remove = remove
+	this.find = find
+	this.count = count
+	this.clear = clear
+	this.display = display
 }	
 
+function add(key, value) {
+	this.dataStore[key] = value
+}
+
+function remove(key) {
+	delete this.dataStore[key]
+}
+
+function find(key) {
+	return this.dataStore[key]
+}
+
+function count() {
+	return Object.keys(this.dataStore).length
+}
+
+function clear() {
+	for(var every in this.dataStore){
+		delete this.dataStore[every]
+	}
+}
+
+function display() {
+	JSON.stringify(this.dataStore)
+}
 
 </script>
 
