@@ -8,10 +8,39 @@
 <script type="text/javascript">
 
 function HashTable() {
-		
-}	
+	this.table = []
+	this.put = put
+	this.get = get
+}
 
+function put(data) {
+	var pos = this.hash || 0
+	this.table[pos] = data
+}
 
+function get(key) {
+	return this.table[this.hash(key) || key]
+}
+
+/**
+ * handle collision
+ */
+
+// build chain
+function buildChains() {
+	for (var i = 0; i < this.table.length; i++) {
+		this.table[i] = []
+	}
+}
+
+// linear detect
+/*method put extend Put{
+	constractor(){
+		invoke,
+		evoke,
+		super
+	}
+}*/
 </script>
 
 
