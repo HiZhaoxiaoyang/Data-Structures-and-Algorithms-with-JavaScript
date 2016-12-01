@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test backstr</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+/**
+ * [re 回文，普通方法]
+ * @param  {String} str  [输入的字符串]
+ * @return {Boolean}     [是否是个回文]
+ */
+function re(str){
+	var isR = false,
+		rev = str.split('').reverse().join('')
+	for (var i = 0, j=0; i < str.length, j< rev.length; i++, j++) {
+		if (str[i]==rev[j]) {
+			isR = true
+		}else{
+			isR = false
+			break
+		}
+	}
+	return isR
+}
+
+/**
+ * [re2 回文，二逼方法]
+ * @param  {String} str  [输入的字符串]
+ * @return {Boolean}     [是否是个回文]
+ */
+function re2(str) {
+	return str === str.split('').reverse().join('')
+}
+
+
+/**
+ * [backstr 回文，文艺方法]
+ * @param  {String} str  [输入的字符串]
+ * @return {Boolean}     [是否是个回文]
+ */
+function Stack() {
+	this.top = 0
+	this.dataStore = []
+	this.pop = pop
+	this.push = push
+	this.peek = peek
+	this.clear = clear
+	this.length = length
+}
+
+function pop() {
+	var poped = this.dataStore[--this.top]
+	// console.log(this.dataStore, poped)
+	return poped
+}
+
+function push(element) {
+	this.dataStore[this.top++] = element
+}
+
+function peek() {
+	return this.dataStore[this.top-1]
+}
+
+function clear() {
+	this.top = 0
+}
+
+function length() {
+	return this.top
+}
+
+
+function backstr(words){
+	var s = new Stack(),
+		rword = ''
+
+	for (var i = 0; i < words.length; ++i) {
+		s.push(words[i])
+	}
+
+	while(s.length() > 0){
+		rword += s.pop()
+	}
+
+	return words === rword
+}
+
+</script>
+
+</body>
+</html>
