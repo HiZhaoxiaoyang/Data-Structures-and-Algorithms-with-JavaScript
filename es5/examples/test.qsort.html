@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test quick sort</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+function randArr(len) {
+	var a = []
+	for (var i = 0; i < len; i++) {
+		a[i] = ~~(Math.random()*len)
+	}
+	return a
+}
+
+
+/**
+ * [qSort 快速排序]
+ * @param  {Array} arr 				 [乱序数组]
+ * @return {Array} left+right+pivot  [连接数组]
+ */
+function qSort(arr) {
+
+	if (arr.length === 0) return []
+
+	var left = [],
+		right = [],
+		pivot = arr[0]
+
+	for (var i = 1; i < arr.length; i++) {
+		if (arr[i]<pivot) {
+			left.push(arr[i])	
+		}else{
+			right.push(arr[i])
+		}
+	}
+	
+	return qSort(left).concat(pivot, qSort(right))
+}
+
+
+function qSortArg(arr) {
+
+	if (arr.length === 0) return []
+
+	var left = [],
+		right = [],
+		pivot = arr[0]
+
+	for (var i = 1; i < arr.length; i++) {
+		if (arr[i]<pivot) {
+			left.push(arr[i])	
+		}else{
+			right.push(arr[i])
+		}
+	}
+	
+	return arguments.callee(left).concat(pivot, arguments.callee(right))
+}
+
+function oriSort(arr) {
+	return arr.sort(function (a,b) {
+		return a-b
+	})
+}
+
+function delayTime(func, num) {
+	var t = new Date().getTime(),
+	diff = 0
+
+	func(num)
+	// console.log(func(num))
+	console.log( func.name + ':' + (new Date().getTime() - t) )
+}
+
+var testArr = randArr(1e4)
+delayTime(qSortArg, testArr)
+delayTime(qSort, testArr)
+delayTime(oriSort, testArr)
+
+</script>
+
+</body>
+</html>
