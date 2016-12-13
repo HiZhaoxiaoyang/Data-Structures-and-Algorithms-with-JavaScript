@@ -42,6 +42,20 @@ function re(str){
 
 
 /**
+ * [re0 回文，reduce方法]
+ * @param  {String} str  [输入的字符串]
+ * @return {Boolean}     [是否是个回文]
+ */
+function re0(str) {
+	var str_arr = str.split(''),
+		str_concat = function (a, b) {
+			return a+b
+		}
+	return str_arr.reduce(str_concat) === str_arr.reduceRight(str_concat)
+}
+
+
+/**
  * [re2 回文，二逼方法]
  * @param  {String} str  [输入的字符串]
  * @return {Boolean}     [是否是个回文]
