@@ -15,17 +15,87 @@ function HashTable() {
 	this.buildChains = buildChains
 	this.put = put
 	this.get = get
+	this.values = []
 }
 
+// normal hashtable put
+/*
 function put(data) {
 	// var pos = this.simpleHash(data)
 	var pos = this.betterHash(data)
 	this.table[pos] = data
 }
+*/
 
-function get(key) {
-	return this.table[this.betterHash(key)]
+// build chain put
+/*function put(key, data) {
+	var pos = this.betterHash(data),
+		index = 0
+	// if (this.table[pos][index] == undefined) {
+	// 	this.table[pos][index+1] = data
+	// 	++index
+	// }
+	// else{
+		while(this.table[pos][index] != undefined){
+			++index
+			this.table[pos][index+1] = data
+		}
+	// }
+	this.table[pos] = data
+}*/
+
+// linear key put
+function put(key, data) {
+	var pos = this.betterHash(key)
+	if (this.table[pos] == undefined) {
+		this.table[pos] = key
+		this.values[pos] = data
+	}
+	else{
+		while(this.table[pos] != undefined){
+			pos++
+		}
+	}
+	// console.log(key, pos, data)
+	this.table[pos] = key
+	this.values[pos] = data
 }
+
+// normal get
+/*function get(key) {
+	return this.table[this.simpleHash(key)]
+}*/
+
+//build chain get
+/*function get(key) {
+	var index = 0,
+		hash = this.betterHash(key)
+	// if (this.table[pos][index]==key) {
+	// 	return this.table[pos][index+1]
+	// 	index += 2
+	// }else{
+		while(this.table[pos][index]!=key){
+			index += 2
+		}
+		return this.table[pos][index+1]
+	// }
+	return undefined
+}*/
+
+// linear key get
+function get(key) {
+	var hash = -1
+	hash = this.betterHash(key)
+	if (hash > -1) {
+		for (var i = hash; i < this.table[hash]!=undefined; i++) {
+			if (this.table[hash] == key) {
+				return this.values[hash]
+			}
+		}
+	}
+	return undefined
+}
+
 
 function simpleHash(data) {
 	var total = 0;
@@ -35,14 +105,9 @@ function simpleHash(data) {
 	return total % this.table.length
 }
 
-function showDistro() {
-	for (var i = 0; i < this.table.length; ++i) {
-		if (this.table[i][0]) {
-			console.log(i + ':' + this.table[i])
-		}
-	}
-}
-
+/**
+ * handle collision
+ */
 function betterHash(string) {
 	const N = 37
 	var total = 0
@@ -56,32 +121,50 @@ function betterHash(string) {
 	return parseInt(total)
 }
 
+// normal & linear showDistro
+function showDistro() {
+	for (var i = 0; i < this.table.length; ++i) {
+		// console.log(i,' :',this.table[i])
+		if (this.table[i]) {
+			console.log(i + ':' + this.table[i])
+		}
+	}
+}
 
-/**
- * handle collision
- */
+// build chain showDistro
+/*function showDistro() {
+	for (var i = 0; i < this.table.length; ++i) {
+		console.log(i,' :',this.table[i],': ',this.table[i][0])
+		if (this.table[i][0]) {
+			console.log(i + ':' + this.table[i])
+		}
+	}
+}*/
+
+
+
 
 // build chain
 function buildChains() {
-	for (var i = 0; i < this.table.length; ++i) {
+	for (var i = 0; i < this.table.length; i++) {
 		this.table[i] = []
 	}
 }
 
 
+//example
 var someNames = ["David", "Jennifer", "Donnie", "Raymond",
                       "Cynthia", "Mike", "Clayton", "Danny", "Jonathan"];
 
-var hTable = new HashTable();
+var hTable = new HashTable()
 
-hTable.buildChains()
+// hTable.buildChains()
 
 for (var i = 0; i < someNames.length; ++i) {
-	hTable.put(someNames[i]);
+	hTable.put(i, someNames[i]);
 }
 
 hTable.showDistro();
-
 
 // linear detect
 /*method put extend Put{
@@ -92,8 +175,6 @@ hTable.showDistro();
 	}
 }*/
 </script>
-
-
 
 
 </body>
