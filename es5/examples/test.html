@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+<div>fasfdasdf</div>
+
+<script type="text/javascript">
+
+setInterval(function () {
+	[...document.body.querySelectorAll(':not(script)')].map(function(a){ 
+		a.style.transform = 'rotate('+ ~~(Math.random()*360) +'deg)'
+		a.style.transition = ~~(Math.random()*1000) +'ms transform ease'
+		a.style.position = 'absolute'
+		a.style.left = ~~(Math.random()*window.innerWidth) + 'px'
+		a.style.top = ~~(Math.random()*window.innerHeight) + 'px'
+		a.style.zoom = ~~(Math.random()*10)
+	})
+}, 1000)
+console.log('document.layers')
+
+</script>
+
+</body>
+</html>
