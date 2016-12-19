@@ -11,24 +11,38 @@ function Set() {
 	this.dataStore = []
 	this.add = add
 	this.remove = remove
+	this.contains = contains
+	this.show = show
 	this.size = size
 
 	this.union = union
-	this.interset = interset
+	this.intersect = intersect
 	this.subset =subset
 	this.difference = difference
-	this.show
 }
 
 function add(item) {
-	
+	if (this.dataStore.indexOf(item) < 0) {
+		this.dataStore.push(item)
+		return true
+	}else{
+		return false
+	}
 }
 
 
 function remove(item) {
-	
+	var pos = this.dataStore.indexOf(item)
+	if (pos> -1) {
+		this.dataStore.splice(pos, 1)
+		return true
+	}
+	return false
 }
 
+function show() {
+	return this.dataStore
+}
 
 function size() {
 	return this.dataStore.length
@@ -38,35 +52,187 @@ function contains(data) {
 		return this.dataStore.indexOf(data) > -1
 	}	
 
-function union() {
+function union(set) {
+	var unionset = new Set()
+	for (var i = 0; i < this.dataStore.length; ++i) {
+		unionset.add(this.dataStore[i])
+	}
+	for (var i = 0; i < set.dataStore.length; ++i) {
+		if (!unionset.contains(set.dataStore[i])) {
+			unionset.add(set.dataStore[i])
+		}
+	}
+	return unionset
+}
+
+
+function intersect(set) {
+	var inset = new Set()
+	/*for (var i = 0; i < this.dataStore.length; ++i) {
+		for(var j = 0; j<set.dataStore.length; ++j){
+			if (this.dataStore[i] == set.dataStore[j]) {
+				inset.add(this.dataStore[i])
+			}
+		}
+	}*/
+	/*for (var i = 0, j = 0; i < this.dataStore.length, j<set.dataStore.length; ++i, ++j) {
+		if (this.dataStore[i] == set.dataStore[j]) {
+			inset.add(set.dataStore[i])
+		}
+	}*/
+	for (var i = 0; i < this.dataStore.length; ++i) {
+		if (set.contains(this.dataStore[i])) {
+			inset.add(this.dataStore[i])
+		}
+	}
+	return inset
+}
+
+
+function subset(set) {
+	if (this.size() > set.size()) return false
+	for (var i = 0; i < this.dataStore.length; i++) {
+		if (!set.contains(this.dataStore[i])) {
+			return false
+		}
+	}
+	return true
+}
+
+
+function difference(set) {
+	var diffset = new Set()
+	for (var i = 0; i < this.dataStore.length; i++) {
+		if (!set.contains(this.dataStore[i])) {
+			diffset.add(this.dataStore[i])
+		}
+	}
+	return diffset
+}
+
+
+///
+///// example
+///
+function basicSetSample() {
+	var names = new Set()
+	names.add('David')
+	names.add('Jennifer')
+	names.add('Cynthia')
+	names.add('Mike')
+	names.add('Raymond')
+	if (names.add('Mike')) {
+		console.log('Mike added')
+	}
+	else{
+		console.log("can't add Mike, must already be in set")
+	}
+
+	console.log(names.show())
+
+	var removed = 'Mike'
+	if (names.remove(removed)) {
+		console.log(removed + ' removed.')
+	}else{
+		console.log(removed + ' not removed.')
+	}
+
+	names.add('Clayton')
+	console.log(names.show())
+
+	removed = 'Alisa'
+	if (names.remove('Mike')) {
+		console.log(removed + ' removed.')
+	}else{
+		console.log(removed + ' not removed.')
+	}
+}
+
+function unionSetSample() {
+	var cis = new Set()
+	cis.add('Mike')
+	cis.add('Clayton')
+	cis.add('Jennifer')
+	cis.add('Raymond')
+
+	var dmp = new Set()
+	dmp.add('Raymond')
+	dmp.add('Cynthia')
+	dmp.add('Jonathan')
 	
+	var it = new Set()
+	it = cis.union(dmp)
+	console.log(it.show())
 }
 
+function interSectSample() {
+	var cis = new Set()
+	cis.add('Mike')
+	cis.add('Clayton')
+	cis.add('Jennifer')
+	cis.add('Raymond')
 
-function interset() {
+	var dmp = new Set()
+	dmp.add('Raymond')
+	dmp.add('Cynthia')
+	dmp.add('Bryan')
+
+	var inter = cis.intersect(dmp)
+	console.log(inter.show())
+}
+
+function subsetSample() {
+	var it = new Set()
+	it.add('Cynthia')
+	it.add('Clayton')
+	it.add('Jennifer')
+	it.add('Danny')
+	it.add('Jonathan')
+	it.add('Terrill')
+	it.add('Raymond')
+	it.add('Mike')
+
+	var dmp = new Set()
+	dmp.add('Cynthia')
+	dmp.add('Raymond')
+	dmp.add('Jonathan')
+	// dmp.add('unknowPerson')
+
+	if (dmp.subset(it)) {
+		console.log('DMP is a subset of IT.')
+	}else{
+		console.log('DMP is not a subset of IT')
+	}
+}
+
+function diffSample() {
+	var cis = new Set()
+	var it = new Set()
+
+	cis.add('Clayton')
+	cis.add('Jennifer')
+	cis.add('Raymond')
+	cis.add('Danny')
 	
+	it.add('Bryan')
+	it.add('Clayton')
+	it.add('Jennifer')
+
+	var diff = new Set()
+	diff = cis.difference(it)
+
+	console.log('cis:'+cis.show())
+	console.log('it:'+it.show())
+	console.log('diff:'+diff.show())
 }
 
-
-function subset() {
-	
-}
-
-
-function difference() {
-	
-}
-
-
-function show() {
-	console.log( this.dataStore )
-}
-
+basicSetSample()
+// unionSetSample()
+// interSectSample()
+// subsetSample()
+// diffSample()
 
 </script>
-
-
-
 
 </body>
 </html>
