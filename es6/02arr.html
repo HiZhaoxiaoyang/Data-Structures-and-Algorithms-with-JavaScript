@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>02arr</title>
+	<title>es6_02arr</title>
 </head>
 <body>
 
@@ -10,23 +10,21 @@
 	 * 创建记录学生的对象
 	 * 提供添加和平均成绩
 	 */
-	var Student = function () {
+	let Student = function () {
 		this.scores = []
 		this.add = add
 		this.average = average
 	}
 
-	var add = function (score) {
+	let add = function (score) {
 		this.scores.push(score)
 	}
 
-	var average = function () {
-		return this.scores.reduce(function(a,b){
-			return a+b
-		})/this.scores.length
+	let average = function () {
+		return this.scores.reduce((a,b) => a+b)/this.scores.length
 	}
 
-	var stu = new Student()
+	let stu = new Student()
 	stu.add(100)
 	stu.add(96)
 	stu.add(72)
