@@ -12,6 +12,7 @@ function Node(data, left, right) {
 	this.left = left
 	this.right =right
 	this.show = show
+	this.count = 1
 }
 
 function show() {
@@ -122,15 +123,44 @@ function find(data) {
 }
 
 function remove(data) {
-	
+	root = removeNode(this.root, data)
 }
 
 function removeNode(node, data) {
+	if (!node) {
+		return null
+	}
+	if (data == node.data) {
+		if (node.left == null && node.right == null) {
+			return null
+		}
+		if (node.left == null) {
+			return node.right
+		}
+		if (node.right == null) {
+			return node.left
+		}
+		var tempNode = getSmallest(node.right)
+		node.data = tempNode.data
+		node.right = removeNode(node.right, tempNode.data)
+		return node
+	}else if( data < node.data ){
+		node.left = removeNode(node.left, data)
+		return node
+	}else{
+		node.right = removeNode(node.right, data)
+		return node
+	}
+}
+
+function getSmallest(node) {
 	
 }
 
 function update(data) {
-	
+	var grade = this.find(data)
+	grade.count++
+	return grade
 }
 
 
