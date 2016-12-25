@@ -12,6 +12,7 @@ function Node(data, left, right) {
 	this.left = left
 	this.right =right
 	this.show = show
+	this.count = 1
 }
 
 function show() {
@@ -27,6 +28,10 @@ function BST() {
 	this.insert = insert
 	this.inOrder = inOrder
 	this.preOrder = preOrder
+
+	this.getMin = getMin
+	this.getMax = getMax
+	this.find = find
 }
 
 function insert(data) {
@@ -88,34 +93,83 @@ function postOrder(node) {
 }
 
 function getMin() {
-	
+	var current = this.root
+	while (current.left) {
+		current = current.left
+	}
+	return current.data
 }
 
 function getMax() {
-	
+	var current = this.root
+	while(current.right){
+		current = current.right
+	}
+	return current.data
 }
 
 function find(data) {
-	
+	var current = this.root
+	while(current){
+		if (current.data == data) {
+			return current
+		}else if(data < current.data){
+			current = current.left
+		}else{
+			current = current.right
+		}
+	}
+	return null
 }
 
 function remove(data) {
-	
+	root = removeNode(this.root, data)
 }
 
 function removeNode(node, data) {
+	if (!node) {
+		return null
+	}
+	if (data == node.data) {
+		if (node.left == null && node.right == null) {
+			return null
+		}
+		if (node.left == null) {
+			return node.right
+		}
+		if (node.right == null) {
+			return node.left
+		}
+		var tempNode = getSmallest(node.right)
+		node.data = tempNode.data
+		node.right = removeNode(node.right, tempNode.data)
+		return node
+	}else if( data < node.data ){
+		node.left = removeNode(node.left, data)
+		return node
+	}else{
+		node.right = removeNode(node.right, data)
+		return node
+	}
+}
+
+function getSmallest(node) {
 	
 }
 
 function update(data) {
-	
+	var grade = this.find(data)
+	grade.count++
+	return grade
 }
 
 
 ////
-///examples
 ///
-function BstInPrePostOrder(InPrePost) {
+///	examples
+///
+///
+function _instBST() {
 	var nums = new BST()
 	nums.insert(23)
 	nums.insert(45)
@@ -124,10 +178,47 @@ function BstInPrePostOrder(InPrePost) {
 	nums.insert(3)
 	nums.insert(99)
 	nums.insert(22)
-	console.log('\n' + InPrePost + ' traversal: ')
-	eval(InPrePost + '(nums.root)')
+	return nums
 }
 
+/**
+ * [BstInPrePostOrder inOrder, preOrder, postOrder, getMin, getMax]
+ * @param {String} InPrePost [loop Function.name]
+ */
+function BstInPrePostOrder(InPrePost) {
+
+	var nums = _instBST()
+
+	console.log('\n' + InPrePost + ' traversal: ')
+	try{
+		eval(InPrePost + '(nums.root)')
+	}catch(e){
+		new Error(e)
+		console.log('valid loop arg is a must.')
+		return
+	}
+
+	console.log("\n");
+	//getMin & getMax
+	var min = nums.getMin();
+	console.log("The minimum value of the BST is: " + min);
+	var max = nums.getMax();
+	console.log("The maximum value of the BST is: " + max);
+}
+
+/**
+ * [findExample -find data from tree]
+ * @param  {Number} val [number data]
+ */
+function findExample(val) {
+	var nums = _instBST()
+	var found = nums.find( val);
+	if (found) {
+	    console.log("Found " + val + " in the BST.");
+    } else {
+        console.log(val + " was not found in the BST.");
+	}
+}
 
 </script>
 
