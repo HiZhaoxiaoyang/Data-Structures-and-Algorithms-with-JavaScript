@@ -9,9 +9,18 @@
 
 function randArr(len) {
 	var a = []
-	for (var i = 0; i < len; i++) {
-		a[i] = ~~(Math.random()*len)
+	if (len[0]) {
+		// strongTypeConverter
+		for (var i = 0; i < len[0]; i++) {
+			a[i] = strongTypeConverter(~~(Math.random()*len), true)
+		}
+		// console.log(a.join())
+	}else{
+		for (var i = 0; i < len; i++) {
+			a[i] = ~~(Math.random()*len)
+		}
 	}
+
 	return a
 }
 
@@ -71,14 +80,19 @@ function delayTime(func, num) {
 	diff = 0
 
 	func(num)
-	// console.log(func(num))
+	// console.time
 	console.log( func.name + ':' + (new Date().getTime() - t) )
+}
+
+function strongTypeConverter(num2str) {
+	return arguments[1]?num2str + '':String(num2str)
 }
 
 var testArr = randArr(1e4)
 delayTime(qSortArg, testArr)	//fast
 delayTime(qSort, testArr)		//faster
 delayTime(oriSort, testArr)		//fastest
+delayTime(randArr, [1e6])
 
 </script>
 
