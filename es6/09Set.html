@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>09Set(es6)</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+/**
+ * es5 (Set is native code in es6)
+function Set() {
+	Array.from(this) = []
+	this.add = add
+	this.remove = remove
+	this.contains = contains
+	this.show = show
+	this.size = size
+
+	this.union = union
+	this.intersect = intersect
+	this.subset =subset
+	this.difference = difference
+}
+*/
+
+
+let add = (item) => {
+	/* 
+	 * es5
+	if (Array.from(this).indexOf(item) < 0) {
+		Array.from(this).push(item)
+		return true
+	}else{
+		return false
+	}*/
+	this.add(item)
+}
+
+
+/*
+ * es5
+var pos = Array.from(this).indexOf(item)
+if (pos> -1) {
+	// Array.from(this).splice(pos, 1)
+	return true
+}
+return false*/
+/*let remove = (item) => {
+	return this.delete(item)
+}*/
+
+/*Set.prototype.remove = (item) => {
+	return this.delete(item)
+}*/
+
+/*let show = () => {
+	return Array.from(this)
+}*/
+Set.prototype.show = () => {
+	return Array.from(this)
+}
+
+let size = () => {
+	/* es5:
+	 * return Array.from(this).length */
+	return this.size
+}
+
+let contains = (data) => {
+	return Array.from(this).indexOf(data) > -1
+}	
+
+let union = (set) => {
+	let unionset = new Set()
+	for (let i = 0; i < Array.from(this).length; ++i) {
+		unionset.add(Array.from(this)[i])
+	}
+	for (let i = 0; i < set.dataStore.length; ++i) {
+		if (!unionset.contains(set.dataStore[i])) {
+			unionset.add(set.dataStore[i])
+		}
+	}
+	return unionset
+}
+
+
+let intersect = (set) => {
+	let inset = new Set()
+	for (let i = 0; i < Array.from(this).length; ++i) {
+		if (set.contains(Array.from(this)[i])) {
+			inset.add(Array.from(this)[i])
+		}
+	}
+	return inset
+}
+
+
+let subset = (set) => {
+	if (this.size() > set.size()) return false
+	for (let i = 0; i < Array.from(this).length; i++) {
+		if (!set.contains(Array.from(this)[i])) {
+			return false
+		}
+	}
+	return true
+}
+
+
+let difference = (set) => {
+	let diffset = new Set()
+	for (let i = 0; i < Array.from(this).length; i++) {
+		if (!set.contains(Array.from(this)[i])) {
+			diffset.add(Array.from(this)[i])
+		}
+	}
+	return diffset
+}
+
+
+///
+///// example
+///
+let basicSetSample = () => {
+	let names = new Set()
+	names.add('David')
+	names.add('Jennifer')
+	names.add('Cynthia')
+	names.add('Mike')
+	names.add('Raymond')
+	if (names.add('Mike')) {
+		console.log('Mike added')
+	}
+	else{
+		console.log("can't add Mike, must already be in set")
+	}
+
+	console.log(names)
+
+	let removed = 'Mike'
+	if (names.delete(removed)) {
+		console.log(removed + ' removed.')
+	}else{
+		console.log(removed + ' not removed.')
+	}
+
+	names.add('Clayton')
+	console.log(names)
+
+	removed = 'Alisa'
+	if (names.delete('Mike')) {
+		console.log(removed + ' removed.')
+	}else{
+		console.log(removed + ' not removed.')
+	}
+
+	console.log(names.size)
+}
+
+let unionSetSample = () => {
+	let cis = new Set()
+	cis.add('Mike')
+	cis.add('Clayton')
+	cis.add('Jennifer')
+	cis.add('Raymond')
+
+	let dmp = new Set()
+	dmp.add('Raymond')
+	dmp.add('Cynthia')
+	dmp.add('Jonathan')
+	
+	let it = new Set()
+	it = cis.union(dmp)
+	console.log(it)
+}
+
+let interSectSample = () => {
+	let cis = new Set()
+	cis.add('Mike')
+	cis.add('Clayton')
+	cis.add('Jennifer')
+	cis.add('Raymond')
+
+	let dmp = new Set()
+	dmp.add('Raymond')
+	dmp.add('Cynthia')
+	dmp.add('Bryan')
+
+	let inter = cis.intersect(dmp)
+	console.log(inter)
+}
+
+let subsetSample = () => {
+	let it = new Set()
+	it.add('Cynthia')
+	it.add('Clayton')
+	it.add('Jennifer')
+	it.add('Danny')
+	it.add('Jonathan')
+	it.add('Terrill')
+	it.add('Raymond')
+	it.add('Mike')
+
+	let dmp = new Set()
+	dmp.add('Cynthia')
+	dmp.add('Raymond')
+	dmp.add('Jonathan')
+	// dmp.add('unknowPerson')
+
+	if (dmp.subset(it)) {
+		console.log('DMP is a subset of IT.')
+	}else{
+		console.log('DMP is not a subset of IT')
+	}
+}
+
+let diffSample = () => {
+	let cis = new Set()
+	let it = new Set()
+
+	cis.add('Clayton')
+	cis.add('Jennifer')
+	cis.add('Raymond')
+	cis.add('Danny')
+	
+	it.add('Bryan')
+	it.add('Clayton')
+	it.add('Jennifer')
+
+	let diff = new Set()
+	diff = cis.difference(it)
+
+	console.log('cis:'+cis)
+	console.log('it:'+it)
+	console.log('diff:'+diff)
+}
+
+basicSetSample()
+// unionSetSample()
+// interSectSample()
+// subsetSample()
+// diffSample()
+
+</script>
+
+</body>
+</html>
