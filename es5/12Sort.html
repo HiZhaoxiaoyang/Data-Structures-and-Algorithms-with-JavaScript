@@ -7,7 +7,7 @@
 
 <script type="text/javascript">
 
-function CArray() {
+function CArray(numElements) {
 	this.dataStore = []
 	this.pos = 0
 	this.numElements = numElements
@@ -18,7 +18,34 @@ function CArray() {
 	this.swap = swap
 }
 
+function insert(item) {
+	this.dataStore[this.dataStore.length] = item
+}
 
+function toString() {
+	var s = ''
+	this.dataStore.map(function (m, i) {
+		var newline = i>0&&(i+1)%10===0?'\n':''
+		s += m + ' ' + newline
+	})
+	console.log(s)
+}
+
+function clear() {
+	this.dataStore.fill(0)
+}
+
+function setData() {
+	for (var i = 0; i < this.numElements; ++i) {
+		this.dataStore[i] = ~~(Math.random()*this.numElements)
+	}
+}
+
+function swap(arr, index1, index2) {
+	var temp = arr[index1]
+	arr[index1] = arr[index2]
+	arr[index2] = temp
+}
 
 function bubbleSort() {
 	
@@ -44,6 +71,9 @@ function qSort(arr) {
 	
 }
 
+var arr_bubble = new CArray(100)
+arr_bubble.setData()
+arr_bubble.toString()
 
 </script>
 
