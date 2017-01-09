@@ -16,6 +16,13 @@ function CArray(numElements) {
 	this.clear = clear
 	this.setData = setData
 	this.swap = swap
+	this.bubbleSort = bubbleSort
+	this.selectionSort = selectionSort
+	this.insertionSort = insertionSort
+	this.shellsort = shellsort
+	this.mergeSort = mergeSort
+	this.qSort = qSort
+	this.uniquer = uniquer
 }
 
 function insert(item) {
@@ -28,7 +35,7 @@ function toString() {
 		var newline = i>0&&(i+1)%10===0?'\n':''
 		s += m + ' ' + newline
 	})
-	console.log(s)
+	console.log(arguments.callee.name+':\n', s)
 }
 
 function clear() {
@@ -48,19 +55,44 @@ function swap(arr, index1, index2) {
 }
 
 function bubbleSort() {
-	
+	var len = this.dataStore.length
+	for (var i = len; i > 1; --i) {
+		for(var j = 0; j < len; ++j){
+			if(this.dataStore[j] > this.dataStore[j+1]){
+				swap(this.dataStore, j, j+1)
+			}
+		}
+	}
 }
 
 function selectionSort() {
-	
+	var min
+	for(var i = 0 ; i < this.dataStore.length -1; ++i){
+		min = i
+		for(var j = i+1; j < this.dataStore.length; ++j){
+			if (this.dataStore[j] < this.dataStore[min]) {
+				min = j
+			}
+			swap(this.dataStore, i, min)
+		}
+	}
 }
 
 function insertionSort() {
-	
+	var temp, j
+	for(var i = 1; i < this.dataStore.length; ++i){
+		temp = this.dataStore[i]
+		j = i
+		while(j > 0 &&(this.dataStore[j - 1] >= temp)){
+			this.dataStore[j] = this.dataStore[j - 1]
+			--j
+		}
+		this.dataStore[j] = temp
+	}
 }
 
 function shellsort() {
-	
+	var gap = [5, 3 ,1]
 }
 
 function mergeSort() {
@@ -68,13 +100,36 @@ function mergeSort() {
 }
 
 function qSort(arr) {
-	
+	var l = [],
+		r = [],
+		pivot = this.dataStore[0]
+	for (var i = 0; i < this.dataStore.length; ++i) {
+		if (this.dataStore[i] < pivot) {
+			l.push(this.dataStore[i])
+		} else {
+			r.push(this.dataStore[i])
+		}
+	}
+
+	return qSort(l).concat(pivot, qSort(r))
 }
 
 var arr_bubble = new CArray(100)
 arr_bubble.setData()
 arr_bubble.toString()
+// arr_bubble.bubbleSort()
+// arr_bubble.selectionSort()
+arr_bubble.insertionSort()
+arr_bubble.toString()
 
+function uniquer() {
+	var s = new Set(this.dataStore)
+	this.dataStore = Array.from(s)
+}
+
+console.log('\nunique:')
+arr_bubble.uniquer()
+arr_bubble.toString()
 </script>
 
 
