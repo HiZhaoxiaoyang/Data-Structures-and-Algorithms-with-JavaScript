@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>unique</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var AArray = function (num) {
+	this.dataStore = []
+	this.setData = function () {
+		for (var i = 0; i < num; i++) {
+			this.dataStore[i] = Math.floor(1 + Math.random()*num)
+		}
+	}.bind(this)
+	this.setData()
+	return this.dataStore
+}
+
+var unique_loop1 = function (arr) {
+	var ret = []
+	for (var i = 0; i < arr.length; i++) {
+		for(var j = i+1; j < arr.length; j++){
+			if (arr[i] === arr[j]) {
+				j = ++i
+			}
+		}
+		ret.push(arr[i])
+	}
+	console.log(arguments.callee.name + ':\n' + ret)
+	return ret
+}
+
+var unique_loop2 = function (arr) {
+	var ret = [],
+		isRepeat = false
+	for(var i = 0; i < arr.length; i++){
+		isRepeat = false
+		for(var j = i+1; j < arr.length; j++){
+			if (arr[i]===arr[j]) {
+				isRepeat = true
+			}
+		}
+		if (!isRepeat) {
+			ret.push(arr[i])
+		}
+	}
+	console.log(arguments.callee.name + ':\n' + ret)
+	return ret
+}
+
+var unique_filter = function (arr) {
+	var ret = arr.filter(function (item , index) {
+		return arr.indexOf(item) === index
+	})
+	console.log(arguments.callee.name + ':\n' + ret)
+	return ret
+}
+
+var unique_include = function (arr) {
+	var ret = []
+	for (var i = 0; i < arr.length; i++) {
+		if (!ret.includes(arr[i])) {
+			ret.push(arr[i])
+		}
+	}
+	console.log(arguments.callee.name + ':\n' + ret)
+	return ret
+}
+
+var unique_indexOf = function (arr) {
+	var ret = []
+	arr.forEach(function (item) {
+		if (ret.indexOf(item) < 0) {
+			ret.push(item)
+		}
+	})
+	console.log(arguments.callee.name + ':\n' + ret)
+	return ret
+}
+
+var unique_keys = function (arr) {
+	var arrObj = {}
+	arr.forEach(function (item) {
+		if (!arrObj[item]) {
+			arrObj[item] = true
+		}
+	})
+	console.log(arguments.callee.name + ':\n' + Object.keys(arrObj))
+	return Object.keys(arrObj)
+}
+
+var unique_set = function (arr) {
+	var ret = Array.from(new Set(arr))
+	console.log(arguments.callee.name + ':\n' + ret)
+	return ret
+}
+
+var arr = new AArray(20)
+unique_loop1(arr)
+unique_loop2(arr)
+unique_filter(arr)
+unique_include(arr)
+unique_indexOf(arr)
+unique_keys(arr)
+unique_set(arr)
+
+</script>
+
+</body>
+</html>
