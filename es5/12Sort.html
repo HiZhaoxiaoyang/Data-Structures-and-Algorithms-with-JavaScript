@@ -19,6 +19,7 @@ function CArray(numElements) {
 	this.bubbleSort = bubbleSort
 	this.selectionSort = selectionSort
 	this.insertionSort = insertionSort
+	this.gaps = [5, 3, 1]
 	this.shellsort = shellsort
 	this.mergeSort = mergeSort
 	this.qSort = qSort
@@ -92,42 +93,100 @@ function insertionSort() {
 }
 
 function shellsort() {
-	var gap = [5, 3 ,1]
-}
-
-function mergeSort() {
-	
-}
-
-function qSort(arr) {
-	var l = [],
-		r = [],
-		pivot = this.dataStore[0]
-	for (var i = 0; i < this.dataStore.length; ++i) {
-		if (this.dataStore[i] < pivot) {
-			l.push(this.dataStore[i])
-		} else {
-			r.push(this.dataStore[i])
+	// var gap = [5, 3 ,1]
+	for(var i =0; i < this.gaps.length; ++i){
+		for(var j = this.gaps[i]; j< this.dataStore.length; ++j){
+			var temp = this.dataStore[j]
+			for(var k = j; k >= this.gaps[i] && this.dataStore[k-this.gaps[i]] > temp; k -= this.gaps[i]){
+				this.dataStore[k] = this.dataStore[k -this.gaps[i]]
+			}
+			this.dataStore[k] = temp
 		}
 	}
+}
 
+function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
+	var rightArr = new Array(stopRight - startRight + 1),
+		leftArr = new Array(stopLeft - startLeft + 1)
+	k = startRight
+	for (var i = 0; i < rightArr.length-1; ++i) {
+		rightArr[i] = arr[k]
+		++k
+	}
+	k = startLeft
+	for (var i = 0; i < rightArr.length-1; ++i) {
+		leftArr[i] = arr[k]
+		++k
+	}
+	rightArr[rightArr.length-1] = Infinity
+	leftArr[leftArr.length-1] = Infinity
+	var m =0 , n=0
+	for(var k = startLeft; k<stopRight; ++k){
+		if (leftArr[m] <= rightArr[n]) {
+			arr[k] = leftArr[m]
+			m++
+		}else{
+			arr[k] = rightArr[n]
+			n++
+		}
+	}
+	// console.log('left array -', leftArr)
+	// console.log('right array -', rightArr)
+}
+
+function mergeSort(arr) {
+	if (arr.length < 2) return
+	var step = 1,
+		left, right
+	while( step < arr.length ){
+		left = 0
+		right = step
+		while(right + step <= arr.length){
+			mergeArrays(arr, left, left+step, right, right+step)
+			left = right+step
+			right = left+step
+		}
+		if (right < arr.length) {
+			mergeArrays(arr, left, left+step, right, arr.length)
+		}
+		step *= 2
+	}
+	// console.log(arr)
+}
+
+
+function qSort(arr) {
+	if (!arr.length) return []
+	var l = [],
+		r = [],
+		pivot = arr[0]
+	for (var i = 1; i < arr.length; i++) {
+		if (arr[i] < pivot) {
+			l.push(arr[i])
+		} else {
+			r.push(arr[i])
+		}
+	}
 	return qSort(l).concat(pivot, qSort(r))
 }
+
 
 var arr_bubble = new CArray(100)
 arr_bubble.setData()
 arr_bubble.toString()
 // arr_bubble.bubbleSort()
 // arr_bubble.selectionSort()
-arr_bubble.insertionSort()
-arr_bubble.toString()
+// arr_bubble.insertionSort()
+// arr_bubble.shellsort()
+// mergeSort(arr_bubble.dataStore)
+console.log(qSort(arr_bubble.dataStore))
+// arr_bubble.toString()
 
 function uniquer() {
 	var s = new Set(this.dataStore)
 	this.dataStore = Array.from(s)
 }
 
-console.log('\nunique:')
 arr_bubble.uniquer()
 arr_bubble.toString()
 </script>
