@@ -7,24 +7,84 @@
 
 <script type="text/javascript">
 
+/**
+ * [seqSearch indexOf method]
+ * @param  {Array} arr    [description]
+ * @param  {Element} data [description]
+ * @return {Number}       [description]
+ */
 function seqSearch(arr, data) {
-	
+	for (var i = 0; i < arr.length; i++) {
+		if(arr[i] == data){
+			return i
+		}
+	}
+	return -1
+}
+
+/**
+ * [seqSearchSelf self-organized data (80-20 rule)]
+ * @param  {Array} arr    [description]
+ * @param  {Element} data [description]
+ * @return {Boolean}      [description]
+ */
+function seqSearchSelf(arr, data) {
+	var percent = 20,
+		perArrLen = arr.length * (percent/100),
+		perArr = arr.slice(0, perArrLen),
+		log = function () {
+			return 'search data:'+ data + ' , ' + 
+			percent+ '% arr[' + perArr + '] , organized : ' + arr
+		}
+	for (var i = 0; i < arr.length; ++i) {
+		if(arr[i] == data && i > perArrLen ){
+			swap(arr, i, 0)
+			console.log('More than '+percent+' and swap - ', log())
+			return !0
+		}
+		else if(arr[i] == data) {
+			console.log('Less than '+percent+' and keep - ', log())
+			return !0
+		}
+	}
+	console.log('N/A - ', log())
+	return !1
 }
 
 function dispArr(arr) {
-	
+	var s = ''
+	arr.map(function (m, i) {
+		var newline = i>0&&(i+1)%10===0?'\n':''
+		s += m + ' ' + newline
+	})
+	console.log(arguments.callee.name+':\n', s)
 }
 
 function findMin(arr) {
-	
+	var min = arr[0]
+	for (var i = 1; i < arr.length; i++) {
+		if (arr[i] < min) {
+			min = arr[i]
+		}
+	}
+	return min
 }
 
 function findMax() {
-	
+	var max = arr[0]
+	for (var i = 1; i < arr.length; i++) {
+		if (arr[i] > max) {
+			max = arr[i]
+		}
+	}
+	return max
 }
 
 function swap(arr ,index, index1) {
-	
+	var temp = arr[index]
+	arr[index] = arr[index1]
+	arr[index1] = temp
+	// console.log(arr)
 }
 
 
@@ -41,6 +101,14 @@ function count() {
 	
 }
 
+
+var arr = Array.from({length:15}, function (v, i) {
+	return ~~(1+Math.random()*15)
+})
+// Array.from({length:4}, function (v, i) {
+// for (var i = 1; i <= 3; i++) {
+	seqSearchSelf(arr, 4)
+// }
 </script>
 
 
