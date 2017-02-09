@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>04Stack</title>
+    <meta charset="utf-8">
+	<title>es5:04Stack</title>
 </head>
 <body>
 
@@ -39,7 +40,7 @@ function clear() {
 
 
 /**
- * 
+ *  进制转换：
  *  可以利用栈将一个数字从一种数制转换成另一种数制。假设想将数字 n 转换为以 b 为基数
  *	的数字，实现转换的算法如下。
  *	(1) 最高位为 n % b，将此位压入栈。
@@ -63,8 +64,11 @@ function mulBase(num, base) {
 	return t
 }
 
+
 /**
- * 判断给定字符串是否是回文
+ * [isPalindrome 用Stack判断给定字符串是否是回文]
+ * @param  {String}  words
+ * @return {Boolean}
  */
 function isPalindrome(words) {
 	var s = new Stack(),
@@ -78,6 +82,48 @@ function isPalindrome(words) {
 
 	return words == rword
 }
+
+/**
+ * [isPalindrome 用for判断给定字符串是否是回文]
+ * @param  {String}  words
+ * @return {Boolean}
+ */
+function isPalindromeForLoop(words) {
+	var isR = false
+	for (var i = 0, j = words.length - 1; i < words.length, j>0; i++, j--) {
+		if (words[i] == words[j]) {
+			isR = true
+		}else{
+			isR = false
+			break
+		}
+	}
+	return isR
+}
+
+/**
+ * [isPalindrome 用reduce判断给定字符串是否是回文]
+ * @param  {String}  words
+ * @return {Boolean}
+ */
+function isPalindromeReduce(words) {
+	var str_arr = words.split(''),
+		str_concat = function (a, b) {
+			return a+b
+		}
+	return str_arr.reduce(str_concat) === str_arr.reduceRight(str_concat)
+}
+
+/**
+ * [isPalindrome 用reverse判断给定字符串是否是回文]
+ * @param  {String}  words
+ * @return {Boolean}
+ */
+function isPalindromeReverse(words) {
+	return words === words.split('').reverse().join('')
+}
+
+
 /**
  * @fileOverview [通用阶乘]
  * @param  {Number}
@@ -110,6 +156,15 @@ function factorialStack(n) {
 }
 
 
+console.log('mulBase(100,2):convert number 100 to 2 binary:', mulBase(100, 2),
+	'\ntest by parseInt(1100100, 2):',parseInt(1100100, 2))
+console.log('isPalindrome("hannah") by Stack:', isPalindrome('hannah'))
+console.log('isPalindromeForLoop("hannah") by for-loop:', isPalindromeForLoop('hannah'))
+console.log('isPalindromeReduce("hannah") by arr.reduce:', isPalindromeReduce('hannah'))
+console.log('isPalindromeReverse("hannah") by arr.reverse:', isPalindromeReverse('hannah'))
+
+console.log('factorial(5) by recursive:', factorial(5))
+console.log('factorialStack(5):', factorialStack(5))
 </script>
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>03List</title>
+	<title>es5:03List</title>
 </head>
 <body>
 
@@ -146,11 +146,11 @@ function Person(name, gender) {
 function displayList(list) {
         for (list.front(); list.currPos() < list.length(); list.next()) {
            if (list.getElement() instanceof Person) {
-              print(list.getElement()["name"] + ", " +
+              console.log(list.getElement()["name"] + ", " +
                    list.getElement()["movie"]);
 }
 else {
-              print(list.getElement());
+              console.log(list.getElement());
            }
 	} 
 }
@@ -162,10 +162,35 @@ function checkIn(name, movie, filmList, customerList) {
 		customerList.remove(c);
 	}
 	else {
-       print(movie + " is not available.");
+       console.log(movie + " is not available.");
     }
 }
 
+
+var names = new List();
+names.append("Cynthia");
+names.append("Raymond");
+names.append("Barbara");
+console.log(names.toString());
+names.remove("Raymond");
+console.log(names.toString());
+
+
+var names = new List();
+names.append("Clayton");
+names.append("Raymond");
+names.append("Cynthia");
+names.append("Jennifer");
+names.append("Bryan");
+names.append("Danny");
+names.front();
+console.log(names.getElement()); //显示Clayton
+names.next();
+console.log(names.getElement()); //显示Raymond
+names.next();
+names.next();
+names.prev();
+console.log(names.getElement()); //显示Cynthia
 
 </script>
 

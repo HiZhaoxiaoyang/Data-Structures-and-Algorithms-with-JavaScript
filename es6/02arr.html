@@ -10,18 +10,20 @@
 	 * 创建记录学生的对象
 	 * 提供添加和平均成绩
 	 */
-	let Student = function () {
-		this.scores = []
-		this.add = add
-		this.average = average
+	class Student {
+		constructor(){
+			this.scores = []
+			this.add = add
+			this.average = average
+		}
 	}
 
-	let add = function (score) {
-		this.scores.push(score)
+	let add = (score) => {
+		stu.scores.push(score)
 	}
 
-	let average = function () {
-		return this.scores.reduce((a,b) => a+b)/this.scores.length
+	let average = () => {
+		return stu.scores.reduce((a,b) => a+b)/stu.scores.length
 	}
 
 	let stu = new Student()

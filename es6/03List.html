@@ -2,122 +2,201 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>list</title>
+        <title>es6:03list</title>
     </head>
     <body>
 
 <script type="text/javascript">
 
+let dataStore = [],
+	listSize = 0,
+	pos = 0
+
 class List {
 	constructor(){
-		this.listSize = 0
-		this.pos = 0
-		this.dataStore = []
-		// this.append = append
-		this.append = element => {
-			this.dataStore[this.listSize++] = element
-		}
-		// this.find = find
-		this.find = element => {
-			for (var i = 0; i < this.dataStore.length; i++) {
-				if (this.dataStore[i] == element) {
-					return i
-				}
-			}
-			return -1
-		}
-		// this.remove = remove
-		this.remove = element => {
-			let i = this.find(element)
-			if (i > -1) {
-				this.dataStore.splice(i, 0)
-				--this.listSize
-				return true
-			}
-			return false
-		}
-		this.length = length
-		this.toString = toString
-		this.clear = clear
-		this.insert = insert
-		this.front = front
-		this.end  = end
-		this.prev = prev
-		this.next = next
-		this.currPos = currPos
-		this.moveTo = moveTo
-		this.getElement = getElement
-		this.contains = contains
+	listSize = 0
+	pos = 0
+	dataStore = []
+	this.clear = clear
+	this.find = find
+	this.toString = toString
+	this.insert = insert
+	this.append = append
+	this.remove = remove
+	this.front = front
+	this.end = end
+	this.prev = prev
+	this.next = next
+	this.length = length
+	this.currPos =currPos
+	this.moveTo = moveTo
+	this.getElement = getElement
+	this.length = length
+	this.contains = contains
 	}
-	/*listSize () {
-		listSize = 0
-	}*/
 }
 
-
-var append = element => {
-	this.dataStore[this.listSize++] = element
+let append = (element) => {
+	dataStore[listSize++] = element
 }
 
-let find = element => {
-	for (var i = 0; i < this.dataStore.length; i++) {
-		if (this.dataStore[i] == element) {
+let find = (element) => {
+	for (var i = 0; i < dataStore.length; ++i) {
+		if (dataStore[i] == element) {
 			return i
 		}
 	}
 	return -1
 }
 
-let remove = element => {
-	let i = this.find(element)
-	if (i > -1) {
-		this.dataStore.splice(i, 0)
-		--this.listSize
+let remove = (element) => {
+	var findInt = this.find(element)
+	if (findInt > -1) {
+		dataStore.splice(findInt, 1)
+		--listSize
 		return true
 	}
 	return false
 }
 
 let length = () => {
-	return this.listSize
+	return listSize
 }
 
 let toString = () => {
-	return this.dataStore
+	return dataStore
+}
+
+let insert = (element, after) =>{
+	var findInt = names.find(after)
+	if (findInt > -1) {
+		dataStore.splice(findInt+1, 0, element)
+		++listSize
+		return true
+	}
+	return false
+}
+
+let insertGt = (element) => {
+	var isGt = false
+	for (var i = 0; i < dataStore.length; i++) {
+		isGt = element > dataStore[i]
+	}
+	if (isGt) {
+		dataStore.splice(listSize, 0, element)
+	}
+	return isGt
+}
+
+let insertLt = (element) => {
+	var isLt = false
+	for (var i = 0; i < dataStore.length; i++) {
+		isLt = element<dataStore[i]
+	}
+	if (isLt) {
+		dataStore[i].splice(0, 0, element)
+	}
+	return isLt
 }
 
 let clear = () => {
+	dataStore.length = 0
+	listSize = pos = 0
 }
 
-let insert = () => {
+let contains = (element) => {
+	return names.find(element) > -1
 }
 
-let front = () => {
+let front = () =>{
+	pos = 0
+}	
+
+let end = () =>{
+	pos = listSize - 1
 }
 
-let end = () => {
+let prev = () =>{
+	if (pos > 0) {
+		--pos
+	}
 }
 
-let prev = () => {
+let next = () =>{
+	if (pos < listSize-1) {
+		++pos
+	}
 }
 
-let next = () => {
+let moveTo = (position) =>{
+	pos = position
 }
 
-let currPos = () => {
+let currPos = () =>{
+	return pos
 }
 
-let moveTo = () => {
+let getElement = () =>{
+	return dataStore[pos]
 }
 
-let getElement = () => {
+/*
+ * user List store Movie disc.
+ */
+
+let Person = (name, gender) => {
+	this.name = name
+	this.gender = gender
 }
 
-let contains = () => {
+let displayList = (list) => {
+        for (list.front(); list.currPos() < list.length(); list.next()) {
+           if (list.getElement() instanceof Person) {
+              console.log(list.getElement()["name"] + ", " +
+                   list.getElement()["movie"]);
+}
+else {
+              console.log(list.getElement());
+           }
+	} 
+}
+
+let checkIn = (name, movie, filmList, customerList) => {
+    if (movieList.contains(movie)) {
+		var c = new Customer(name, movie); 
+		filmList.append(movie); 
+		customerList.remove(c);
+	}
+	else {
+       console.log(movie + " is not available.");
+    }
 }
 
 
+var names = new List();
+names.append("Cynthia");
+names.append("Raymond");
+names.append("Barbara");
+console.log(names.toString());
+names.remove("Raymond");
+console.log(names.toString());
+
+
+var names = new List();
+names.append("Clayton");
+names.append("Raymond");
+names.append("Cynthia");
+names.append("Jennifer");
+names.append("Bryan");
+names.append("Danny");
+names.front();
+console.log(names.getElement()); //Clayton
+names.next();
+console.log(names.getElement()); //Raymond
+names.next();
+names.next();
+names.prev();
+console.log(names.getElement()); //Cynthia
 </script>
-
     </body>
 </html>
