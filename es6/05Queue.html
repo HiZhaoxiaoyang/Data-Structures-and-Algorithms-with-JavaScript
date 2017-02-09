@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>es6:05Queue</title>
+</head>
+<body>
+
+
+随机数：
+<input type="text" size="100" />
+<button>排序</button>
+<p></p>
+
+<script type="text/javascript">
+
+let dataStore = []
+
+class Queue {
+  constructor(){
+  	dataStore = []
+  	this.enqueue = enqueue
+  	this.dequeue = dequeue
+  	this.front = front
+  	this.back = back
+  	this.toString = toString
+  	this.empty = empty
+  }
+}
+
+let enqueue = (element) => {
+	return dataStore.push(element)
+}
+
+let dequeue = () => {
+	return dataStore.shift()
+}
+
+let front = () => {
+	return dataStore[0]
+}
+
+let back = () => {
+	return dataStore[dataStore.length -1]
+}
+
+let toString = () => {
+	return dataStore
+}
+
+let empty = () => {
+	return !dataStore.length
+}
+
+/**
+ * 5.3 使用队列:方块舞的舞伴分配问题
+ */
+
+class Dancer {
+  constructor(name, sex){
+  	this.name = name
+  	this.sex = sex
+  }
+}
+
+let getDancer = (males, females) => {
+	for (var i = 0; i < names.length; i++) {
+		var dance = names[i].split(' '),
+			sex = dance[0],
+			name = dance[1]
+		if (sex === 'F') {
+			females.enqueue(new Dancer(name, sex))
+		}else{
+			males.enqueue(new Dancer(name, sex))
+		}
+	}
+}
+
+let dance = (males, females) => {
+	console.log("The dance partners are: \n");
+	while(!females.empty() && !males.empty()){
+    try{
+  		console.log("Female dancer is: "+ females.dequeue().name +
+  					" and the male dancer is: " + males.dequeue().name)
+    }catch(e){
+      console.log(new Error(e))
+    }
+	}
+}
+
+var names = [
+	 'F Allison McMillan',
+     'M Frank Opitz',
+     'M Mason McMillan',
+     'M Clayton Ruff',
+     'F Cheryl Ferenback',
+     'M Raymond Williams',
+     'F Jennifer Ingram',
+     'M Bryan Frazer',
+     'M David Durr',
+     'M Danny Martin',
+     'F Aurora Adney'
+     ];
+
+var maleDancers = new Queue();
+var femaleDancers = new Queue();
+
+getDancer(maleDancers, femaleDancers);
+dance(maleDancers, femaleDancers);
+
+if (!femaleDancers.empty()) {
+    console.log(femaleDancers.front().name + " is waiting to dance.");
+ }
+ if (!maleDancers.empty()) {
+    console.log(maleDancers.front().name + " is waiting to dance.");
+ }
+
+ /**
+  * 对0~99的数字进行排序（基数排序）
+  */
+ var ipt = document.querySelector('input'),
+ 	 btn = document.querySelector('button'),
+ 	 pp = document.querySelector('p'),
+ 	 step = 0,
+ 	 num = 10,
+ 	 arr = [],
+   queues = []
+ 
+ for (var i = 0; i < num; ++i) {
+    queues[i] = new Queue();
+ }
+ 
+ ipt.onclick = function (e) {
+ 	arr = []
+ 	for (var i = 0; i < num; i++) {
+		arr.push(Math.floor(Math.random()*100))
+ 	}
+ 	this.value = arr
+ }
+
+ let distribute = (nums, query, n, digit) => {
+ 	for (var i = 0; i < n; i++) {
+ 		if (digit == 1) {
+ 			query[nums[i]%10].enqueue(nums[i])
+ 		}else{
+ 			query[Math.floor(nums[i] / 10)].enqueue(nums[i])
+ 		}
+ 	}
+ }
+
+ let collect = (query, nums) => {
+ 	var i = 0
+ 	for (var digit = 0; digit < num; ++digit) {
+           while (!query[digit].empty()) {
+               nums[i++] = query[digit].dequeue();
+           }
+       }
+ }
+
+ /**
+  * distribute(nums, queues, 10, 1);
+     collect(queues, nums);
+     distribute(nums, queues, 10, 10);
+     collect(queues, nums);
+     print("\n\nAfter radix sort: ");
+     dispArray(nums);
+  */
+ btn.onclick = function (e) {
+ 	step++
+ 	if(step === 1) {
+  		distribute(arr, queues, num, 1)
+  		collect(queues, arr)
+  		pp.innerHTML = '排序个位基数：' + arr
+ 	}else if(step === 2){
+  		distribute(arr, queues, num, num)
+  		collect(queues, arr)
+  		pp.innerHTML = '排序十位基数：' + arr
+  		step = 0
+ 	}
+ }
+ 
+
+ // test git
+</script>
+
+
+
+
+</body>
+</html>
