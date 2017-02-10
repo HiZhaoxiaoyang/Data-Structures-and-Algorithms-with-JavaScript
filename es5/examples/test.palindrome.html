@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>test.hidden.palindrome</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+function isHiddenPalindrome(s){
+
+	var sArr = s.split(''),
+		sEven = s.length%2===0,
+		sReverse = sArr.reverse().join(''),
+		sSort = sArr.sort()
+		/*unique = function (arr) {
+			return Array.from(new Set(arr))
+		}
+		unique = function (arr) {
+			var t = '', m = 0
+			var ret = arr.filter(function (item , index) {
+				console.log(item, arr.indexOf(item), index, s.charAt(index))
+				return arr.indexOf(item) === index
+			})
+			return ret
+		}*/
+
+	if (s === sReverse) return 1
+
+	var temO = {}
+	sArr.forEach(function (m , i) {
+		var cc = s.charAt(i)
+		if (temO[cc]) {
+			temO[cc]++
+		}else{
+			temO[cc] = 1
+		}
+	})
+	// console.log(s, ':', temO,  Object.values(temO))
+	if (sEven) {
+		for(var every in temO){
+			if (temO[every]%2 === 1) return 0
+		}
+		return 1
+	}else{
+		var oddOnly = 0
+		for(var every in temO){
+			if (temO[every]%2 === 1){
+				oddOnly++
+			}
+		}
+		return oddOnly>1?0:1
+	}
+}
+
+console.log("i'm even 'AAAAZZZZ', return 1, visible palindrome:", isHiddenPalindrome('AAAAZZZZ'))
+console.log("i'm even 'ACCACCDBDBCBBC', return 1, hidden palindrome:", isHiddenPalindrome('ACCACCDBDBCBBC'))
+console.log("i'm even 'ACCCDDDBBC', return 0, not hidden palindrome:", isHiddenPalindrome('ACCCDDDBBC'))
+console.log("i'm odd 'AABAA', return 1, visible palindrome:", isHiddenPalindrome('AABAA'))
+console.log("i'm odd 'AAAACBB', return 1, hidden palindrome:", isHiddenPalindrome('AAAACBB'))
+console.log("i'm odd 'AAAACBCCA', return 0, not hidden palindrome:", isHiddenPalindrome('AAAACBCCA'))
+
+</script>
+
+</body>
+</html>
