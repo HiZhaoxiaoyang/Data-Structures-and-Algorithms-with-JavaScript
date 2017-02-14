@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Float to Integer performance vs.</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+function performanceLog(arg) {
+	console.time(arg)
+	var float = 0.0
+	for(var i = 0; i<10e4;i++){
+		if (arg === 'Math.floor') {
+			float += Math.floor(Math.random())
+		}else if(arg === '~~'){
+			float += ~~(Math.random())
+		}else if(arg === '>>'){
+			float += (Math.random())>>0
+		}else if (arg === 'parseInt'){
+			float += parseInt(Math.random())
+		}
+	}
+	console.timeEnd(arg)
+}
+
+performanceLog('Math.floor')
+performanceLog('~~')
+performanceLog('>>')
+performanceLog('parseInt')
+</script>
+
+</body>
+</html>
