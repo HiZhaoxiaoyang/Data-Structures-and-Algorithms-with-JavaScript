@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>anagrams</title>
+</head>
+<body>
+
+<script type="text/javascript">
+/*
+source:
+https://github.com/kennymkchan/interview-questions-in-javascript#string--anagram
+*/
+/*mine ...almost*/
+function isAnagrams(a, b) {
+	a = a.toLowerCase()
+	b = b.toLowerCase()
+	return a.split('').sort().join()  == b.split('').sort().join()
+}
+/*
+source:
+https://github.com/kennymkchan/interview-questions-in-javascript#recursion--decimal-to-binary
+*/
+// mine
+function decimalToBinary(n){
+	// 10..toString(2) === '1010'
+	return n.toString(2)
+}
+
+/* 
+ * other:
+ * Stack algorithm
+*/
+function Stack() {
+	this.dataStore = []
+	this.top = 0
+	this.push = push
+	this.pop = pop
+	this.peek = peek
+	this.length = length
+	this.clear = clear
+}
+
+function push(element) {
+	this.dataStore[this.top++] = element
+}
+
+function pop(element) {
+	return this.dataStore[--this.top]
+}
+
+function peek(element) {
+	return this.dataStore[this.top-1]
+}
+
+function length() {
+	return this.top
+}
+
+function clear() {
+	this.top = 0
+}
+
+function decimalToBinaryStack(num, base) {
+	var s = new Stack()
+	do{
+		s.push(num%base)
+		num = ~~(num /= base)
+	}while(num>0)
+
+	var t = ''
+	while(s.length()>0) {
+		t += s.pop()
+	}
+	return t
+}
+
+console.log('isAnagrams("Mary", "arMy"):', isAnagrams('Mary', 'arMy'))
+console.log('decimalToBinary(10):', decimalToBinary(10))
+console.log('decimalToBinaryStack(10, 2):', decimalToBinaryStack(10, 2))
+</script>
+
+</body>
+</html>
