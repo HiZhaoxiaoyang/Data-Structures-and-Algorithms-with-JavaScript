@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>es6:07Dictionary</title>
+</head>
+<body>
+
+<script type="text/javascript">
+let dataStore = []
+
+class Dictionary {
+	constructor(){
+		this.dataStore = []
+		this.add = add
+		this.remove = remove
+		this.find = find
+		this.count = count
+		this.clear = clear
+		this.display = display
+	}
+}	
+
+let add = (key, value) => {
+	dataStore[key] = value
+}
+
+let remove = (key) => {
+	delete dataStore[key]
+}
+
+let find = (key) => {
+	return dataStore[key]
+}
+
+let count = () => {
+	return Object.keys(dataStore).length
+}
+
+let clear = () => {
+	for(var every in dataStore){
+		delete dataStore[every]
+	}
+}
+
+let display = () => {
+	JSON.stringify(dataStore)
+}
+
+</script>
+
+
+
+
+</body>
+</html>

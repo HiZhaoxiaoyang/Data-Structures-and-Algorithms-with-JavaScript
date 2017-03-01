@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>es6:08HashTable</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+let table = new Array(137),
+	values = []
+
+class HashTable {
+	constructor(){
+		this.table = table
+		this.simpleHash = simpleHash
+		this.betterHash = betterHash
+		this.showDistro = showDistro
+		this.buildChains = buildChains
+		this.put = put
+		this.get = get
+		this.values = values
+	}
+}
+
+// normal hashtable put
+/*
+let put = (data) => {
+	// var pos = this.simpleHash(data)
+	var pos = this.betterHash(data)
+	this.table[pos] = data
+}
+*/
+
+// build chain put
+/*let put = (key, data) => {
+	var pos = this.betterHash(data),
+		index = 0
+	// if (this.table[pos][index] == undefined) {
+	// 	this.table[pos][index+1] = data
+	// 	++index
+	// }
+	// else{
+		while(this.table[pos][index] != undefined){
+			++index
+			this.table[pos][index+1] = data
+		}
+	// }
+	this.table[pos] = data
+}*/
+
+// linear key put
+let put = (key, data) => {
+	var pos = betterHash(key)
+	if (table[pos] == undefined) {
+		table[pos] = key
+		values[pos] = data
+	}
+	else{
+		while(table[pos] != undefined){
+			pos++
+		}
+	}
+	// console.log(key, pos, data)
+	table[pos] = key
+	values[pos] = data
+}
+
+// normal get
+/*let get = (key) => {
+	return table[this.simpleHash(key)]
+}*/
+
+//build chain get
+/*let get = (key) => {
+	var index = 0,
+		hash = this.betterHash(key)
+	// if (table[pos][index]==key) {
+	// 	return table[pos][index+1]
+	// 	index += 2
+	// }else{
+		while(table[pos][index]!=key){
+			index += 2
+		}
+		return table[pos][index+1]
+	// }
+	return undefined
+}*/
+
+// linear key get
+let get = (key) => {
+	var hash = -1
+	hash = betterHash(key)
+	if (hash > -1) {
+		for (var i = hash; i < table[hash]!=undefined; i++) {
+			if (table[hash] == key) {
+				return values[hash]
+			}
+		}
+	}
+	return undefined
+}
+
+
+let simpleHash = (data) => {
+	var total = 0;
+	for (var i = 0; i < data.length; ++i) {
+		total += data.charCodeAt(i)
+	}
+	return total % table.length
+}
+
+/**
+ * handle collision
+ */
+let betterHash = (string) => {
+	const N = 37
+	var total = 0
+	for (var i = 0; i < string.length; ++i) {
+		total += N*total + string.charCodeAt(i)
+	}
+	total = total % table.length
+	if(total<0){
+		total += table.length - 1
+	}
+	return parseInt(total)
+}
+
+// normal & linear showDistro
+let showDistro = () => {
+	for (var i = 0; i < table.length; ++i) {
+		// console.log(i,' :',table[i])
+		if (table[i]) {
+			console.log(i + ':' + table[i])
+		}
+	}
+}
+
+// build chain showDistro
+/*let showDistro = () => {
+	for (var i = 0; i < table.length; ++i) {
+		console.log(i,' :',table[i],': ',table[i][0])
+		if (table[i][0]) {
+			console.log(i + ':' + table[i])
+		}
+	}
+}*/
+
+
+
+
+// build chain
+let buildChains = () => {
+	for (var i = 0; i < table.length; i++) {
+		table[i] = []
+	}
+}
+
+
+//example
+var someNames = ["David", "Jennifer", "Donnie", "Raymond",
+                      "Cynthia", "Mike", "Clayton", "Danny", "Jonathan"];
+
+var hTable = new HashTable()
+
+// hTable.buildChains()
+
+for (var i = 0; i < someNames.length; ++i) {
+	hTable.put(i, someNames[i]);
+}
+
+hTable.showDistro();
+
+// linear detect
+/*method put extend Put{
+	constructor(){
+		invoke,
+		evoke,
+		super
+	}
+}*/
+</script>
+
+
+</body>
+</html>

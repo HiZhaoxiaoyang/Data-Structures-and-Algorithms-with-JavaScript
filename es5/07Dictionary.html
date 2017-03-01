@@ -30,7 +30,11 @@ function find(key) {
 }
 
 function count() {
-	return Object.keys(this.dataStore).length
+	var i = 0
+	for(var every in this.dataStore){
+		++i
+	}
+	return i
 }
 
 function clear() {

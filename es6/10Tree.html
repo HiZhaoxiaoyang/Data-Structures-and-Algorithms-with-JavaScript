@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>10Tree</title>
+	<title>es6:10Tree</title>
 </head>
 <body>
 
 <script type="text/javascript">
 
-function Node(data, left, right) {
-	this.data = data
-	this.left = left
-	this.right =right
-	this.show = show
-	this.count = 1
+class Node{
+	constructor(data, left, right) {
+		this.data = data
+		this.left = left
+		this.right =right
+		this.show = show
+		this.count = 1
+	}
 }
 
-function show() {
+let show = () => {
 	return this.data
 }
 
@@ -23,18 +25,20 @@ function show() {
 /**
  * [BST binary searching tree]
  */
-function BST() {
-	this.root = null
-	this.insert = insert
-	this.inOrder = inOrder
-	this.preOrder = preOrder
+class BST{
+	constructor(){
+		this.root = null
+		this.insert = insert
+		this.inOrder = inOrder
+		this.preOrder = preOrder
 
-	this.getMin = getMin
-	this.getMax = getMax
-	this.find = find
+		this.getMin = getMin
+		this.getMax = getMax
+		this.find = find
+	}
 }
 
-function insert(data) {
+let insert = (data) => {
 	var n = new Node(data ,null ,null)
 	if (this.root == null) {
 		this.root = n
@@ -61,7 +65,7 @@ function insert(data) {
 }
 
 var inOrderStr = ''
-function inOrder(node) {
+let inOrder = (node) => {
 	if (node) {
 		inOrder(node.left)
 		inOrderStr += node.show() + ' '
@@ -72,7 +76,7 @@ function inOrder(node) {
 }
 
 var preOrderStr = ''
-function preOrder(node) {
+let preOrder = (node) => {
 	if (node) {
 		preOrderStr += node.show() + ' '
 		preOrder(node.left)
@@ -83,7 +87,7 @@ function preOrder(node) {
 }
 
 var postOrderStr = ''
-function postOrder(node) {
+let postOrder = (node) => {
 	if (node) {
 		postOrder(node.left)
 		postOrder(node.right)
@@ -92,7 +96,7 @@ function postOrder(node) {
 	console.log(postOrderStr)
 }
 
-function getMin() {
+let getMin = () => {
 	var current = this.root
 	while (current.left) {
 		current = current.left
@@ -100,7 +104,7 @@ function getMin() {
 	return current.data
 }
 
-function getMax() {
+let getMax = () => {
 	var current = this.root
 	while(current.right){
 		current = current.right
@@ -108,7 +112,7 @@ function getMax() {
 	return current.data
 }
 
-function find(data) {
+let find = (data) => {
 	var current = this.root
 	while(current){
 		if (current.data == data) {
@@ -122,11 +126,11 @@ function find(data) {
 	return null
 }
 
-function remove(data) {
+let remove = (data) => {
 	root = removeNode(this.root, data)
 }
 
-function removeNode(node, data) {
+let removeNode = (node, data) => {
 	if (!node) {
 		return null
 	}
@@ -153,11 +157,11 @@ function removeNode(node, data) {
 	}
 }
 
-function getSmallest(node) {
+let getSmallest = (node) => {
 	
 }
 
-function update(data) {
+let update = (data) => {
 	var grade = this.find(data)
 	grade.count++
 	return grade
@@ -169,7 +173,7 @@ function update(data) {
 ///	examples
 ///
 ///
-function _instBST() {
+let _instBST = () => {
 	var nums = new BST()
 	nums.insert(23)
 	nums.insert(45)
@@ -185,16 +189,15 @@ function _instBST() {
  * [BstInPrePostOrder inOrder, preOrder, postOrder, getMin, getMax]
  * @param {String} InPrePost [loop Function.name]
  */
-function BstInPrePostOrder(InPrePost) {
+let BstInPrePostOrder = (InPrePost) => {
 
 	var nums = _instBST()
 
 	console.log('\n' + InPrePost.name + ' traversal: ')
 	try{
-		eval(InPrePost + '(nums.root)')
+		eval(InPrePost.name + '(nums.root)')
 	}catch(e){
-		console.log(new Error(e))
-		console.log('valid loop arg is a must.')
+		console.log(new Error(e) + '\nvalid loop arg is a must.')
 		return
 	}
 
@@ -210,7 +213,7 @@ function BstInPrePostOrder(InPrePost) {
  * [findExample -find data from tree]
  * @param  {Number} val [number data]
  */
-function findExample(val) {
+let findExample = (val) => {
 	var nums = _instBST()
 	var found = nums.find( val);
 	if (found) {
@@ -219,6 +222,7 @@ function findExample(val) {
         console.log(val + " was not found in the BST.");
 	}
 }
+
 
 BstInPrePostOrder(inOrder)
 BstInPrePostOrder(preOrder)
